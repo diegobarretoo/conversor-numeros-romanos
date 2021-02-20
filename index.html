@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- link for google fonts - Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png">
+  <title>Conversor de Números Romanos</title>
+</head>
+
+<body>
+  <div class="container">
+    <section class="converter">
+      <h1>Conversor de Números Romanos</h1>
+      <p>Converta numeração romana para decimal ou decimal para romana.</p>
+
+      <div class="input-area">
+        <span class="label">Romano:</span>
+        <span id="roman" contenteditable="true" autofocus placeholder="Romano"></span>
+        <button class="desktop" onclick="handleRoman()">Converter</button>
+        <button class="mobile" onclick="handleRoman()">Converter para Decimal</button>
+      </div>
+
+      <div class="input-area">
+        <span class="label">Decimal:</span>
+        <input type="number" name="decimal" id="decimal" min="1" max="3999000" placeholder="Decimal">
+        <button class="desktop" onclick="handleDecimal()">Converter</button>
+        <button class="mobile" onclick="handleDecimal()">Converter para Romano</button>
+      </div>
+
+      <h2 class="result"></h2>
+    </section>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+
+</html>
