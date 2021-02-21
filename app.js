@@ -19,7 +19,7 @@ const romanToNum = {
 };
 
 function handleMil() {
-  let thousand = document.querySelector('.thousand');
+  const thousand = document.querySelector('#roman > span');
   if (!thousand) return false;
   const mil = thousand.innerText;
   const completo = inputRoman.innerText.slice(mil.length) || 'VAZIO';
@@ -29,11 +29,12 @@ function handleMil() {
 function handleRoman() {
   const romanValue = inputRoman.innerText;
   if (romanValue.length === 0) {
-    alert('INVÁLIDO');
+    alert('Número inválido. Tente outra vez!');
     return null;
   }
 
   const ab = handleMil();
+  console.log(ab);
   if (ab) {
     const rest = ab[1] === 'VAZIO' ? 0 : lidar(ab[1]);
     const mi = lidar(ab[0]) * 1000;
@@ -50,7 +51,7 @@ function handleRoman() {
 function lidar(romanValue) {
   const keys = romanValue.split('');
   if (!keys.every((key) => romanToNum[key])) {
-    alert('INVÁLIDO');
+    alert('Número inválido. Tente outra vez!');
     return null;
   }
 
@@ -74,7 +75,8 @@ function handleDecimal() {
   const decimalValue = +inputDecimal.value;
   inputDecimal.value = decimalValue;
 
-  if (decimalValue < 1 || decimalValue > 3999000) alert('INVÁLIDO');
+  if (decimalValue < 1 || decimalValue > 3999000)
+    alert('Número inválido. Tente outra vez!');
   if (decimalValue > 0 && decimalValue < 4000) {
     const roman = convertToRoman(decimalValue);
     inputRoman.innerText = roman;
