@@ -17,20 +17,20 @@
   <div class="container">
     <section class="converter">
       <h1>Conversor de Números Romanos</h1>
-      <p>Converta numeração romana para decimal ou decimal para romana.</p>
-
-      <div class="input-area">
-        <span class="label">Romano:</span>
-        <span id="roman" contenteditable="true" autofocus></span>
-        <button class="desktop" onclick="handleRoman()">Converter</button>
-        <button class="mobile" onclick="handleRoman()">Converter para Decimal</button>
-      </div>
+      <p>Converta numeros romanos em decimal ou decimal em romanos.</p>
 
       <div class="input-area">
         <span class="label">Decimal:</span>
-        <input type="number" name="decimal" id="decimal" min="1" max="3999000">
+        <input id="decimal" type="number" name="decimal" min="1" max="3999000" autofocus>
         <button class="desktop" onclick="handleDecimal()">Converter</button>
         <button class="mobile" onclick="handleDecimal()">Converter para Romano</button>
+      </div>
+
+      <div class="input-area">
+        <span class="label">Romano:</span>
+        <span id="roman" contenteditable="true"></span>
+        <button class="desktop" onclick="handleRoman()">Converter</button>
+        <button class="mobile" onclick="handleRoman()">Converter para Decimal</button>
       </div>
 
       <h2 class="result"></h2>

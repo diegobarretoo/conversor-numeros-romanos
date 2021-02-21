@@ -22,7 +22,13 @@ body {
   justify-content: center;
   width: 100%;
   height: 100vh;
-  /* background-color: #ccc; */
+  background: rgb(56, 38, 2);
+  background: linear-gradient(
+    90deg,
+    rgba(56, 38, 2, 1) 0%,
+    rgba(93, 65, 8, 1) 35%,
+    rgba(128, 90, 16, 1) 100%
+  );
 }
 
 .converter {
@@ -62,10 +68,10 @@ body {
   padding: 1rem;
   outline: none;
   font-family: serif;
-  font-size: clamp(0.8rem, 0.8rem + 0.5vw, 1.5rem);
-  /* font-size: 1.5rem; */
+  font-size: clamp(0.8rem, 0.8rem + 1vw, 1.5rem);
   border: 1px solid transparent;
   transition: 0.2s;
+  text-transform: uppercase;
 }
 .input-area input:focus,
 .input-area #roman:focus,
@@ -113,7 +119,7 @@ body {
 
 @media (max-width: 425px) {
   .container {
-    background-color: var(--secundary-color);
+    background: var(--secundary-color);
   }
   .converter {
     background-color: unset;

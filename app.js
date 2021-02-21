@@ -1,6 +1,7 @@
 const inputRoman = document.querySelector('#roman');
 const inputDecimal = document.querySelector('#decimal');
 const result = document.querySelector('.result');
+const erro = document.querySelector('.erro');
 
 const romanToNum = {
   M: 1000,
@@ -18,6 +19,12 @@ const romanToNum = {
   I: 1,
 };
 
+function error() {
+  inputRoman.innerText = '';
+  inputDecimal.value = 0;
+  return null;
+}
+
 function handleMil() {
   const thousand = document.querySelector('#roman > span');
   if (!thousand) return false;
@@ -29,7 +36,6 @@ function handleMil() {
 function handleRoman() {
   const romanValue = inputRoman.innerText;
   if (romanValue.length === 0) {
-    alert('Número inválido. Tente outra vez!');
     return null;
   }
 
@@ -43,6 +49,7 @@ function handleRoman() {
     handleDecimal(inputDecimal.value);
   } else {
     const romanCem = lidar(romanValue);
+    if (!romanCem) return null;
     inputDecimal.value = romanCem;
     handleDecimal(inputDecimal.value);
   }
@@ -51,8 +58,7 @@ function handleRoman() {
 function lidar(romanValue) {
   const keys = romanValue.split('');
   if (!keys.every((key) => romanToNum[key])) {
-    alert('Número inválido. Tente outra vez!');
-    return null;
+    return error();
   }
 
   const numbers = keys.map((key) => romanToNum[key]);
@@ -75,8 +81,10 @@ function handleDecimal() {
   const decimalValue = +inputDecimal.value;
   inputDecimal.value = decimalValue;
 
-  if (decimalValue < 1 || decimalValue > 3999000)
-    alert('Número inválido. Tente outra vez!');
+  if (decimalValue < 1 || decimalValue > 3999000) {
+    alert('Número não suportado');
+    return error();
+  }
   if (decimalValue > 0 && decimalValue < 4000) {
     const roman = convertToRoman(decimalValue);
     inputRoman.innerText = roman;
@@ -119,5 +127,3 @@ function convertToRoman(num) {
 
   return roman;
 }
-
-// https://www.todamateria.com.br/numeros-romanos/
