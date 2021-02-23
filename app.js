@@ -1,7 +1,6 @@
 const inputRoman = document.querySelector('#roman');
 const inputDecimal = document.querySelector('#decimal');
 const result = document.querySelector('.result');
-const erro = document.querySelector('.erro');
 
 const romanToNum = {
   M: 1000,
@@ -19,70 +18,49 @@ const romanToNum = {
   I: 1,
 };
 
-function error() {
-  inputRoman.innerText = '';
-  inputDecimal.value = 0;
-  return null;
-}
-
-function handleMil() {
-  const thousand = document.querySelector('#roman > span');
-  if (!thousand) return false;
-  const mil = thousand.innerText;
-  const completo = inputRoman.innerText.slice(mil.length) || 'VAZIO';
-  return [mil, completo];
-}
+// Event tecla ENTER
+inputRoman.addEventListener('keydown', (e) => {
+  if (e.keyCode === 13) {
+    e.preventDefault();
+    handleRoman();
+    inputRoman.focus();
+  }
+});
+inputDecimal.addEventListener('keydown', (e) => {
+  if (e.keyCode === 13) {
+    e.preventDefault();
+    handleDecimal();
+    inputDecimal.focus();
+  }
+});
 
 function handleRoman() {
   const romanValue = inputRoman.innerText;
   if (romanValue.length === 0) {
-    return null;
-  }
-
-  const ab = handleMil();
-  console.log(ab);
-  if (ab) {
-    const rest = ab[1] === 'VAZIO' ? 0 : lidar(ab[1]);
-    const mi = lidar(ab[0]) * 1000;
-    total = rest + mi;
-    inputDecimal.value = total;
-    handleDecimal(inputDecimal.value);
-  } else {
-    const romanCem = lidar(romanValue);
-    if (!romanCem) return null;
-    inputDecimal.value = romanCem;
-    handleDecimal(inputDecimal.value);
-  }
-}
-
-function lidar(romanValue) {
-  const keys = romanValue.split('');
-  if (!keys.every((key) => romanToNum[key])) {
     return error();
   }
 
-  const numbers = keys.map((key) => romanToNum[key]);
-
-  for (let i = 0; i < numbers.length; i++) {
-    if (numbers[i] < numbers[i + 1]) numbers[i] = -numbers[i];
+  const romans = hasOverline();
+  if (romans) {
+    const decimal = romans[1] === 'Empty' ? 0 : convertToDecimal(romans[1]);
+    const decimalThousand = convertToDecimal(romans[0]) * 1000;
+    const total = decimal + decimalThousand;
+    inputDecimal.value = total;
+    handleDecimal(inputDecimal.value);
+  } else {
+    const decimal = convertToDecimal(romanValue);
+    if (!decimal) return null;
+    inputDecimal.value = decimal;
+    handleDecimal(inputDecimal.value);
   }
-
-  return somar(numbers);
-}
-
-function somar(arr) {
-  const total = arr.reduce((acumulador, atual) => {
-    return acumulador + atual;
-  });
-  return total;
 }
 
 function handleDecimal() {
+  //Remove os zeros à esquerda
   const decimalValue = +inputDecimal.value;
   inputDecimal.value = decimalValue;
 
   if (decimalValue < 1 || decimalValue > 3999000) {
-    alert('Número não suportado');
     return error();
   }
   if (decimalValue > 0 && decimalValue < 4000) {
@@ -94,25 +72,74 @@ function handleDecimal() {
     const rest = convertToRoman(decimalValue % 1000);
     const romanThousand = convertToRoman(parseInt(decimalValue / 1000));
 
-    result.innerText = '';
     inputRoman.innerText = '';
-    result.insertAdjacentElement('afterbegin', createThousand(romanThousand));
+    result.innerText = '';
+
+    //Input Roman com overline
     inputRoman.insertAdjacentElement(
       'afterbegin',
       createThousand(romanThousand),
     );
-    result.insertAdjacentText('beforeend', `${rest} = ${decimalValue}`);
     inputRoman.insertAdjacentText('beforeend', rest);
+
+    //Result com overline
+    result.insertAdjacentElement('afterbegin', createThousand(romanThousand));
+    result.insertAdjacentText('beforeend', `${rest} = ${decimalValue}`);
   }
-  inputDecimal.classList.add('focus');
-  inputRoman.classList.add('focus');
+  inputDecimal.focus();
 }
+
+// HELPERS;
 
 function createThousand(romanThousand) {
   const thousand = document.createElement('span');
   thousand.classList.add('thousand');
   thousand.innerText = romanThousand;
   return thousand;
+}
+
+function addNumbers(nums) {
+  const total = nums.reduce((acc, current) => {
+    return acc + current;
+  });
+  return total;
+}
+
+function error() {
+  inputRoman.innerText = '';
+  inputDecimal.value = 0;
+  inputDecimal.focus();
+  return null;
+}
+
+function hasOverline() {
+  const thousand = document.querySelector('#roman > span');
+
+  if (!thousand) return false;
+
+  const overlineRoman = thousand.innerText; //
+  const restRoman = inputRoman.innerText.slice(overlineRoman.length) || 'Empty';
+  return [overlineRoman, restRoman];
+}
+
+// ALGORITMOS;
+
+function convertToDecimal(romanValue) {
+  const keys = romanValue.split('');
+
+  //Verifica se existe alguma key (algarismo) inválida
+  if (!keys.every((key) => romanToNum[key])) {
+    return error();
+  }
+
+  //Transforma as keys em numbers
+  const nums = keys.map((key) => romanToNum[key]);
+
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] < nums[i + 1]) nums[i] = -nums[i];
+  }
+
+  return addNumbers(nums);
 }
 
 function convertToRoman(num) {
