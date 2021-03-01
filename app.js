@@ -43,8 +43,11 @@ function handleRoman() {
   const romans = hasOverline();
   if (romans) {
     const decimal = romans[1] === 'Empty' ? 0 : convertToDecimal(romans[1]);
-    const decimalThousand = convertToDecimal(romans[0]) * 1000;
-    const total = decimal + decimalThousand;
+    const decimalThousand = convertToDecimal(romans[0]);
+
+    if (decimal === null || decimalThousand === null) return error();
+
+    const total = decimal + decimalThousand * 1000;
     inputDecimal.value = total;
     handleDecimal(inputDecimal.value);
   } else {
@@ -108,6 +111,7 @@ function addNumbers(nums) {
 function error() {
   inputRoman.innerText = '';
   inputDecimal.value = 0;
+  result.innerText = '';
   inputDecimal.focus();
   return null;
 }
@@ -117,7 +121,7 @@ function hasOverline() {
 
   if (!thousand) return false;
 
-  const overlineRoman = thousand.innerText; //
+  const overlineRoman = thousand.innerText;
   const restRoman = inputRoman.innerText.slice(overlineRoman.length) || 'Empty';
   return [overlineRoman, restRoman];
 }
