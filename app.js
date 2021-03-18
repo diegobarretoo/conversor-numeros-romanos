@@ -1,5 +1,5 @@
-const inputRoman = document.querySelector('#roman');
-const inputDecimal = document.querySelector('#decimal');
+const inputRoman = document.querySelector('#roman-input-converter');
+const inputDecimal = document.querySelector('#decimal-input-converter');
 const result = document.querySelector('.result');
 
 const romanToNum = {
@@ -117,7 +117,7 @@ function error() {
 }
 
 function hasOverline() {
-  const thousand = document.querySelector('#roman > span');
+  const thousand = document.querySelector('#roman-input-converter > span');
 
   if (!thousand) return false;
 

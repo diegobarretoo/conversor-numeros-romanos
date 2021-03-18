@@ -14,37 +14,70 @@
 </head>
 
 <body>
-  <div class="container">
-    <section class="converter">
-      <span class="dropdown_btn">
-        <img src="./assets/arrow_dropdown.svg">
-      </span>
-      <nav class="dropdown_menu">
-        <ul>
-          <li><img src="./assets/alt.svg" alt="converter">Conversor</li>
-          <li><img src="./assets/school.svg" alt="praticar">Praticar</li>
-        </ul>
-      </nav>
-      <!-- <h1>Responda a questão corretamente</h1> -->
-      <h1>Conversor de Números Romanos</h1>
-      <p>Converta numeros romanos em decimal ou decimal em romanos.</p>
+  <div class="bg">
+    <div class="view">
+      <div class="container">
 
-      <div class="input-area">
-        <span class="label">Decimal:</span>
-        <input id="decimal" type="number" name="decimal" min="1" max="3999000" autofocus>
-        <button class="desktop" onclick="handleDecimal()">Converter</button>
-        <button class="mobile" onclick="handleDecimal()">Converter para Romano</button>
+        <section class="converter wrapper">
+          <span class="nav_btn">
+            <img src="./assets/navigate_next.svg">
+          </span>
+          <!-- <nav class="dropdown_menu">
+            <ul>
+              <li id="teste"></li>
+              <li id="practice_mode"><img src="./assets/school.svg" alt="praticar">Praticar<img src="./assets/arrow_dropdown.svg" alt="praticar"></li>
+            </ul>
+          </nav> -->
+          <h1>Conversor de Números Romanos</h1>
+          <p>Converta numeros romanos em decimal ou decimal em romanos.</p>
+
+          <div class="input-area">
+            <span class="label">Decimal:</span>
+            <input class="inputs" id="decimal-input-converter" type="number" min="1" max="3999000" autofocus>
+            <button class="desktop" onclick="handleDecimal()">Converter</button>
+            <button class="mobile" onclick="handleDecimal()">Converter para Romano</button>
+          </div>
+
+          <div class="input-area">
+            <span class="label">Romano:</span>
+            <span class="inputs" id="roman-input-converter" contenteditable="true"></span>
+            <button class="desktop" onclick="handleRoman()">Converter</button>
+            <button class="mobile" onclick="handleRoman()">Converter para Decimal</button>
+          </div>
+
+          <h2 class="result"></h2>
+        </section>
+
+        <section class="practice wrapper">
+          <span class="nav_btn">
+            <img src="./assets/navigate_before.svg">
+          </span>
+
+          <div class="practice-header">
+            <h1>Praticar - Nível Fácil</h1>
+            <span>
+              <img src="./assets/arrow_dropdown.svg" alt="dropdown nível">
+            </span>
+          </div>
+
+          <div class="practice-body">
+
+            <span class="inputs" contenteditable="true"></span>
+
+            <input class="inputs" type="number" name="decimal" min="1" max="3999000">
+
+            <button class="check" onclick="handleCheck()">Verificar</button>
+
+          </div>
+
+
+        </section>
+
+
+
       </div>
 
-      <div class="input-area">
-        <span class="label">Romano:</span>
-        <span id="roman" contenteditable="true"></span>
-        <button class="desktop" onclick="handleRoman()">Converter</button>
-        <button class="mobile" onclick="handleRoman()">Converter para Decimal</button>
-      </div>
-
-      <h2 class="result"></h2>
-    </section>
+    </div>
   </div>
 
   <script src="./app.js"></script>
