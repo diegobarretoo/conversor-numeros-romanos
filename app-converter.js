@@ -18,22 +18,6 @@ const romanToNum = {
   I: 1,
 };
 
-// Event tecla ENTER
-inputRoman.addEventListener('keydown', (e) => {
-  if (e.keyCode === 13) {
-    e.preventDefault();
-    handleRoman();
-    inputRoman.focus();
-  }
-});
-inputDecimal.addEventListener('keydown', (e) => {
-  if (e.keyCode === 13) {
-    e.preventDefault();
-    handleDecimal();
-    inputDecimal.focus();
-  }
-});
-
 function handleRoman() {
   const romanValue = inputRoman.innerText;
   if (romanValue.length === 0) {
@@ -49,12 +33,12 @@ function handleRoman() {
 
     const total = decimal + decimalThousand * 1000;
     inputDecimal.value = total;
-    handleDecimal(inputDecimal.value);
+    handleDecimal();
   } else {
     const decimal = convertToDecimal(romanValue);
     if (!decimal) return null;
     inputDecimal.value = decimal;
-    handleDecimal(inputDecimal.value);
+    handleDecimal();
   }
 }
 
@@ -158,3 +142,19 @@ function convertToRoman(num) {
 
   return roman;
 }
+
+// Events tecla ENTER
+inputRoman.addEventListener('keydown', (e) => {
+  if (e.code === 'Enter' || e.key === 'Enter' || e.keyCode === 13) {
+    e.preventDefault();
+    handleRoman();
+    inputRoman.focus();
+  }
+});
+inputDecimal.addEventListener('keydown', (e) => {
+  if (e.code === 'Enter' || e.key === 'Enter' || e.keyCode === 13) {
+    e.preventDefault();
+    handleDecimal();
+    inputDecimal.focus();
+  }
+});

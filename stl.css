@@ -45,3 +45,21 @@
   background: #e0e0e0;
   justify-content: center;
 }
+
+/* JAVASCRIPT */
+/* const dropdownMenu = document.querySelector('.dropdown_menu');
+//
+dropdownMenu.classList.toggle('active');
+  nextNav.classList.toggle('active');
+//
+  Praticar
+const practiceBtn = document.querySelector('#practice_mode');
+
+practiceBtn.addEventListener('click', (e) => {
+  dropdownMenu.classList.remove('active');
+  nextNav.classList.remove('active');
+
+  // bg.style.background = '#b30';
+
+  container.style.transform = 'translateX(-600px)';
+}); */
