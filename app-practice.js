@@ -98,11 +98,23 @@ function generateRandomNumber(level = 'easy') {
   }
 }
 
+window.addEventListener('resize', () => {
+  console.log(screen.width);
+});
+
 // Nav Buttons
 nextNav.addEventListener('click', (e) => {
   //Reseta o conversor
   error();
-  container.style.transform = 'translateX(-425px)';
+  if (screen.width <= 460) {
+    container.style.transform = 'translateX(-100vw)';
+  }
+  if (screen.width > 460 && screen.width <= 620) {
+    container.style.transform = 'translateX(-430px)';
+  }
+  if (screen.width > 620) {
+    container.style.transform = 'translateX(-600px)';
+  }
 });
 beforeNav.addEventListener('click', (e) => {
   container.style.transform = 'translateX(0px)';
