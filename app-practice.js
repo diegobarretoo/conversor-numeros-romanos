@@ -8,7 +8,7 @@ const resultPractice = document.querySelector('.practice-result');
 const btnCheck = document.querySelector('.check');
 
 // Mensagens
-const messages = ['Incrível!', 'Ótimo trabalho!', 'Excelente!', 'Muito Bem!'];
+const messages = ['Boa!', 'Ótimo trabalho!', 'Excelente!', 'Muito Bem!'];
 
 // Recebe a resposta correta gerada
 let rightAnswer;
