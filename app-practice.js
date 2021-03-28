@@ -98,9 +98,9 @@ function generateRandomNumber(level = 'easy') {
   }
 }
 
-window.addEventListener('resize', () => {
-  console.log(screen.width);
-});
+// window.addEventListener('resize', () => {
+//   console.log(screen.width);
+// });
 
 // Nav Buttons
 nextNav.addEventListener('click', (e) => {
