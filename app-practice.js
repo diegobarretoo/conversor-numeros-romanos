@@ -1,3 +1,5 @@
+// import debounce from './debounce.js';
+
 // Elements
 const nextNav = document.querySelector('.converter .nav_btn');
 const beforeNav = document.querySelector('.practice .nav_btn');
@@ -37,7 +39,7 @@ function initQuestion() {
 
 function handleCheck() {
   if (btnCheck.innerText === 'Continuar') {
-    CleanAndReset();
+    cleanAndReset();
     initQuestion();
     return;
   }
@@ -76,7 +78,7 @@ function handleAnswer(userAnswer) {
   }
 }
 
-function CleanAndReset() {
+function cleanAndReset() {
   resultPractice.classList.remove('red');
   resultPractice.classList.remove('green');
   btnCheck.style.backgroundColor = 'var(--primary-color)';
@@ -98,27 +100,43 @@ function generateRandomNumber(level = 'easy') {
   }
 }
 
-// window.addEventListener('resize', () => {
-//   console.log(screen.width);
-// });
+// ajusta a visualização do 'app practice' no container
+function setViewPractice() {
+  if (screen.width <= 460) container.style.transform = 'translateX(-100vw)';
+  if (screen.width > 460 && screen.width <= 620)
+    container.style.transform = 'translateX(-430px)';
+  if (screen.width > 620) container.style.transform = 'translateX(-600px)';
+}
+
+// Lida com o redimensionamento da tela
+function onResize() {
+  if (getComputedStyle(container).transform !== 'none') {
+    setViewPractice();
+  }
+}
+window.addEventListener('resize', debounce(onResize, 50));
 
 // Nav Buttons
 nextNav.addEventListener('click', (e) => {
-  //Reseta o conversor
+  //Reseta o app-conversor
   error();
-  if (screen.width <= 460) {
-    container.style.transform = 'translateX(-100vw)';
-  }
-  if (screen.width > 460 && screen.width <= 620) {
-    container.style.transform = 'translateX(-430px)';
-  }
-  if (screen.width > 620) {
-    container.style.transform = 'translateX(-600px)';
-  }
+  setViewPractice();
 });
 beforeNav.addEventListener('click', (e) => {
-  container.style.transform = 'translateX(0px)';
+  container.style.transform = 'none';
 });
+
+// Debounce
+function debounce(callback, delay) {
+  let timer;
+  return (...args) => {
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(() => {
+      callback(...args);
+      timer = null;
+    }, delay);
+  };
+}
 
 // Events tecla ENTER
 answer.addEventListener('keydown', (e) => {
