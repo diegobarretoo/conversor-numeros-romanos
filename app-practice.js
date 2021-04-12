@@ -109,6 +109,7 @@ function setViewPractice() {
 }
 
 // Lida com o redimensionamento da tela
+// https://stackoverflow.com/questions/42267189/how-to-get-value-translatex-by-javascript/42267468
 function onResize() {
   if (getComputedStyle(container).transform !== 'none') {
     setViewPractice();

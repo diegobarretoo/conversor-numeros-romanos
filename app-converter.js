@@ -2,6 +2,8 @@ const inputRoman = document.querySelector('#roman-input-converter');
 const inputDecimal = document.querySelector('#decimal-input-converter');
 const result = document.querySelector('.result');
 
+const bg = document.querySelector('.bg');
+
 const romanToNum = {
   M: 1000,
   CM: 900,
@@ -17,6 +19,70 @@ const romanToNum = {
   IV: 4,
   I: 1,
 };
+
+const obj = {
+  10: 'I',
+  11: 'V',
+  12: 'X',
+  13: 'L',
+  14: 'C',
+  15: 'D',
+  16: 'M',
+  17: 'I = 1',
+  18: 'V = 5',
+  19: 'X = 10',
+  20: 'L = 50',
+  21: 'C = 100',
+  22: 'D = 500',
+  23: 'M = 1000',
+  24: 'STOP',
+};
+
+for (let i = 0; i <= 50; i++) {
+  //
+  const randomNumber = Math.floor(Math.random() * 100 + 1);
+  const romanResul = convertToRoman(randomNumber);
+
+  const blocks = document.createElement('span');
+  // blocks.innerText = i <= 9 || i > 24 ? i : obj[i];
+  // blocks.innerHTML = `${randomNumber} = <span class="redis">${romanResul}</span>`;
+  blocks.innerHTML = `${randomNumber}<br><span class="redis">${romanResul}</span>`;
+  blocks.classList.add('block');
+
+  const randomTranslateX = Math.floor(Math.random() * (800 + 800 + 1) - 800);
+  const randomTranslateY = Math.floor(Math.random() * (500 + 500 + 1) - 500);
+
+  // blocks.style.transform = `translate(${randomTranslateX}px, ${randomTranslateY}px)`;
+  bg.appendChild(blocks);
+}
+
+function animateBlocks() {
+  anime({
+    targets: '.block',
+    translateX: () => {
+      return anime.random(-700, 700);
+    },
+    translateY: () => {
+      return anime.random(-400, 400);
+    },
+    scale: () => {
+      return anime.random(0.8, 1);
+    },
+    opacity: () => {
+      return anime.random(0.3, 0.7);
+    },
+    rotate: () => {
+      return anime.random(-60, 60) + 'deg';
+    },
+
+    easing: 'linear',
+    duration: 3000,
+    delay: anime.stagger(10),
+    complete: animateBlocks,
+  });
+}
+
+animateBlocks();
 
 function handleRoman() {
   const romanValue = inputRoman.innerText;
@@ -96,7 +162,7 @@ function error() {
   inputRoman.innerText = '';
   inputDecimal.value = 0;
   result.innerText = '';
-  inputDecimal.focus();
+  // inputDecimal.focus();
   return null;
 }
 
