@@ -20,24 +20,6 @@ const romanToNum = {
   I: 1,
 };
 
-const obj = {
-  10: 'I',
-  11: 'V',
-  12: 'X',
-  13: 'L',
-  14: 'C',
-  15: 'D',
-  16: 'M',
-  17: 'I = 1',
-  18: 'V = 5',
-  19: 'X = 10',
-  20: 'L = 50',
-  21: 'C = 100',
-  22: 'D = 500',
-  23: 'M = 1000',
-  24: 'STOP',
-};
-
 for (let i = 0; i <= 50; i++) {
   //
   const randomNumber = Math.floor(Math.random() * 100 + 1);
@@ -45,44 +27,58 @@ for (let i = 0; i <= 50; i++) {
 
   const blocks = document.createElement('span');
   // blocks.innerText = i <= 9 || i > 24 ? i : obj[i];
-  // blocks.innerHTML = `${randomNumber} = <span class="redis">${romanResul}</span>`;
-  blocks.innerHTML = `${randomNumber}<br><span class="redis">${romanResul}</span>`;
+  blocks.innerHTML = `${randomNumber} = <span class="redis">${romanResul}</span>`;
+  // blocks.innerHTML = `${randomNumber}<br><span class="redis">${romanResul}</span>`;
   blocks.classList.add('block');
 
   const randomTranslateX = Math.floor(Math.random() * (800 + 800 + 1) - 800);
   const randomTranslateY = Math.floor(Math.random() * (500 + 500 + 1) - 500);
 
-  // blocks.style.transform = `translate(${randomTranslateX}px, ${randomTranslateY}px)`;
+  blocks.style.transform = `translate(${randomTranslateX}px, ${randomTranslateY}px)`;
   bg.appendChild(blocks);
 }
 
-function animateBlocks() {
-  anime({
-    targets: '.block',
-    translateX: () => {
-      return anime.random(-700, 700);
-    },
-    translateY: () => {
-      return anime.random(-400, 400);
-    },
-    scale: () => {
-      return anime.random(0.8, 1);
-    },
-    opacity: () => {
-      return anime.random(0.3, 0.7);
-    },
-    rotate: () => {
-      return anime.random(-60, 60) + 'deg';
-    },
+const blockss = document.querySelectorAll('.block');
 
-    easing: 'linear',
-    duration: 3000,
-    delay: anime.stagger(10),
-    complete: animateBlocks,
+// const anima = animateBlocks();
+
+blockss.forEach((block) => {
+  block.addEventListener('click', (e) => {
+    console.log('NESK');
+    anime.remove('.block');
+    clearr();
+  });
+});
+
+function clearr() {
+  blockss.forEach((block) => {
+    setTimeout(() => {
+      block.style.transition = '2s';
+      block.style.transform = 'translateX(50%)';
+      block.style.transform = 'translateY(50%)';
+      // block.style.opacity = 0;
+    }, Math.floor(Math.random() * 1000 + 1));
   });
 }
 
 animateBlocks();
+
+function animateBlocks() {
+  anime({
+    targets: '.block',
+    translateX: () => anime.random(-700, 700),
+    translateY: () => anime.random(-400, 400),
+    scale: () => anime.random(0.8, 1),
+    opacity: () => anime.random(0.3, 0.5),
+    // rotate: () => anime.random(-60, 60) + 'deg',
+    rotateY: '1turn',
+
+    easing: 'linear',
+    duration: 5000,
+    delay: anime.stagger(10),
+    complete: animateBlocks,
+  });
+}
 
 function handleRoman() {
   const romanValue = inputRoman.innerText;
