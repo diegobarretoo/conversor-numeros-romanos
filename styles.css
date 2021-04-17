@@ -44,30 +44,6 @@ Containers
   overflow: hidden;
 }
 
-.block {
-  /* display: none; */
-  position: absolute;
-  color: #bbb;
-  /* background: #b82020; */
-  opacity: 0.5;
-  /* box-shadow: 10px 10px 50px rgba(0, 0, 0, 0.2); */
-  cursor: pointer;
-  padding: 10px;
-  border-radius: 5px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-align: center;
-  animation: show-teste 5.2s;
-}
-.block:hover {
-  background: rgba(0, 0, 0, 0.55);
-}
-
-.redis {
-  /* color: #067722; */
-  color: #3fd01b;
-}
-
 .view {
   overflow: hidden;
   max-width: 600px;
@@ -140,14 +116,6 @@ Nav Buttons
   padding: 4px;
   cursor: pointer;
 }
-
-/* .nav_btn.active {
-  box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.55);
-  -webkit-box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.55);
-  -moz-box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.55);
-  right: 8px;
-  background-color: yellow !important;
-} */
 
 .nav_btn:hover {
   background-color: #fdfdfd;
@@ -458,14 +426,30 @@ Practice
   }
 }
 
-/* ------------------------------
-Mobile
------------------------------- */
+/* ----------------------------
+Bg Animation
+---------------------------- */
 
-@media (min-width: 1440px) {
-  body {
-    background-color: red;
-  }
+.bg-item {
+  /* display: none; */
+  position: absolute;
+  padding: 10px;
+  border-radius: 5px;
+  color: #bbb;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-align: center;
+  opacity: 0.5;
+  cursor: pointer;
+  animation: show 5.2s;
+}
+.bg-item:hover {
+  background: rgba(0, 0, 0, 0.55);
+  opacity: 1 !important;
+}
+
+.bg-item > span {
+  color: #3fd01b;
 }
 
 /* ------------------------------
@@ -494,7 +478,7 @@ Animations
   }
 }
 
-@keyframes show-teste {
+@keyframes show {
   from {
     opacity: 0;
   }

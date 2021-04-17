@@ -1,7 +1,6 @@
 const inputRoman = document.querySelector('#roman-input-converter');
 const inputDecimal = document.querySelector('#decimal-input-converter');
 const result = document.querySelector('.result');
-
 const bg = document.querySelector('.bg');
 
 const romanToNum = {
@@ -19,66 +18,6 @@ const romanToNum = {
   IV: 4,
   I: 1,
 };
-
-for (let i = 0; i <= 50; i++) {
-  //
-  const randomNumber = Math.floor(Math.random() * 100 + 1);
-  const romanResul = convertToRoman(randomNumber);
-
-  const blocks = document.createElement('span');
-  // blocks.innerText = i <= 9 || i > 24 ? i : obj[i];
-  blocks.innerHTML = `${randomNumber} = <span class="redis">${romanResul}</span>`;
-  // blocks.innerHTML = `${randomNumber}<br><span class="redis">${romanResul}</span>`;
-  blocks.classList.add('block');
-
-  const randomTranslateX = Math.floor(Math.random() * (800 + 800 + 1) - 800);
-  const randomTranslateY = Math.floor(Math.random() * (500 + 500 + 1) - 500);
-
-  blocks.style.transform = `translate(${randomTranslateX}px, ${randomTranslateY}px)`;
-  bg.appendChild(blocks);
-}
-
-const blockss = document.querySelectorAll('.block');
-
-// const anima = animateBlocks();
-
-blockss.forEach((block) => {
-  block.addEventListener('click', (e) => {
-    console.log('NESK');
-    anime.remove('.block');
-    clearr();
-  });
-});
-
-function clearr() {
-  blockss.forEach((block) => {
-    setTimeout(() => {
-      block.style.transition = '2s';
-      block.style.transform = 'translateX(50%)';
-      block.style.transform = 'translateY(50%)';
-      // block.style.opacity = 0;
-    }, Math.floor(Math.random() * 1000 + 1));
-  });
-}
-
-animateBlocks();
-
-function animateBlocks() {
-  anime({
-    targets: '.block',
-    translateX: () => anime.random(-700, 700),
-    translateY: () => anime.random(-400, 400),
-    scale: () => anime.random(0.8, 1),
-    opacity: () => anime.random(0.3, 0.5),
-    // rotate: () => anime.random(-60, 60) + 'deg',
-    rotateY: '1turn',
-
-    easing: 'linear',
-    duration: 5000,
-    delay: anime.stagger(10),
-    complete: animateBlocks,
-  });
-}
 
 function handleRoman() {
   const romanValue = inputRoman.innerText;
@@ -138,7 +77,7 @@ function handleDecimal() {
   inputDecimal.focus();
 }
 
-// HELPERS;
+// HELPERS
 
 function createThousand(romanThousand) {
   const thousand = document.createElement('span');
@@ -172,7 +111,7 @@ function hasOverline() {
   return [overlineRoman, restRoman];
 }
 
-// ALGORITMOS;
+// ALGORITMOS
 
 function convertToDecimal(romanValue) {
   const keys = romanValue.split('');
@@ -206,17 +145,104 @@ function convertToRoman(num) {
 }
 
 // Events tecla ENTER
-inputRoman.addEventListener('keydown', (e) => {
-  if (e.code === 'Enter' || e.key === 'Enter' || e.keyCode === 13) {
-    e.preventDefault();
-    handleRoman();
-    inputRoman.focus();
+function addEnterKeyEvents() {
+  inputRoman.addEventListener('keydown', (e) => {
+    if (e.code === 'Enter' || e.key === 'Enter' || e.keyCode === 13) {
+      e.preventDefault();
+      handleRoman();
+      inputRoman.focus();
+    }
+  });
+  inputDecimal.addEventListener('keydown', (e) => {
+    if (e.code === 'Enter' || e.key === 'Enter' || e.keyCode === 13) {
+      e.preventDefault();
+      handleDecimal();
+      inputDecimal.focus();
+    }
+  });
+}
+
+// BG ANIMATION
+
+function createBgItens() {
+  for (let i = 0; i <= 50; i++) {
+    // create item
+    const bgItem = document.createElement('span');
+    bgItem.classList.add('bg-item');
+
+    // random content
+    const randomNumber = Math.floor(Math.random() * 100 + 1);
+    const romanResul = convertToRoman(randomNumber);
+    bgItem.innerHTML = `${randomNumber} = <span>${romanResul}</span>`;
+
+    // transform style
+    const randomTranslateX = Math.floor(Math.random() * (800 + 800 + 1) - 800);
+    const randomTranslateY = Math.floor(Math.random() * (500 + 500 + 1) - 500);
+    bgItem.style.transform = `translate(${randomTranslateX}px, ${randomTranslateY}px)`;
+
+    bg.appendChild(bgItem);
   }
-});
-inputDecimal.addEventListener('keydown', (e) => {
-  if (e.code === 'Enter' || e.key === 'Enter' || e.keyCode === 13) {
-    e.preventDefault();
-    handleDecimal();
-    inputDecimal.focus();
-  }
-});
+
+  return document.querySelectorAll('.bg-item');
+}
+
+function addBgClearEvent() {
+  bgItens.forEach((bgItem) => {
+    bgItem.addEventListener('click', () => {
+      anime.remove('.bg-item');
+      bgClear();
+    });
+  });
+}
+
+function bgClear() {
+  bgItens.forEach((bgItem) => {
+    bgItem.style.transition = '2s';
+    setTimeout(() => {
+      bgItem.style.transform = 'translateX(50%) translateY(50%)';
+    }, Math.floor(Math.random() * 1500 + 1));
+    setTimeout(() => {
+      bgItem.style.display = 'none';
+    }, 2000);
+  });
+}
+
+function animateBgItens() {
+  // Config animation
+  anime({
+    targets: '.bg-item',
+    translateX: () => anime.random(-700, 700),
+    translateY: () => anime.random(-400, 400),
+    scale: () => anime.random(0.8, 1),
+    opacity: () => anime.random(0.3, 0.5),
+    rotateY: '1turn',
+
+    easing: 'linear',
+    duration: 5000,
+    delay: anime.stagger(10),
+    complete: animateBgItens,
+  });
+}
+
+function addButtonsEvents() {
+  const decimalButtons = document.querySelectorAll('[data-btn="decimal"]');
+  const romanButtons = document.querySelectorAll('[data-btn="roman"]');
+
+  decimalButtons.forEach((btn) => {
+    btn.addEventListener('click', handleDecimal);
+  });
+  romanButtons.forEach((btn) => {
+    btn.addEventListener('click', handleRoman);
+  });
+}
+
+// Init
+function init() {
+  addButtonsEvents();
+  animateBgItens();
+  addBgClearEvent();
+  addEnterKeyEvents();
+}
+
+const bgItens = createBgItens();
+init();

@@ -15,10 +15,7 @@ const messages = ['Boa!', 'Ótimo trabalho!', 'Excelente!', 'Muito Bem!'];
 // Recebe a resposta correta gerada
 let rightAnswer;
 
-// Roda o app
-initQuestion();
-
-function initQuestion() {
+function createQuestion() {
   const randomNumber = generateRandomNumber();
   const randomRoman = convertToRoman(randomNumber); //Até 3999
 
@@ -40,7 +37,7 @@ function initQuestion() {
 function handleCheck() {
   if (btnCheck.innerText === 'Continuar') {
     cleanAndReset();
-    initQuestion();
+    createQuestion();
     return;
   }
   // Armazena a resposta do usuário
@@ -111,21 +108,26 @@ function setViewPractice() {
 // Lida com o redimensionamento da tela
 function onResize() {
   if (getComputedStyle(container).transform !== 'none') {
+    console.log('TESSSSTE');
     setViewPractice();
   }
 }
-window.addEventListener('resize', debounce(onResize, 50));
-// https://stackoverflow.com/questions/42267189/how-to-get-value-translatex-by-javascript/42267468
+function addResizeEvent() {
+  window.addEventListener('resize', debounce(onResize, 50));
+  // https://stackoverflow.com/questions/42267189/how-to-get-value-translatex-by-javascript/42267468
+}
 
-// Nav Buttons
-nextNav.addEventListener('click', (e) => {
-  //Reseta o app-conversor
-  error();
-  setViewPractice();
-});
-beforeNav.addEventListener('click', (e) => {
-  container.style.transform = 'none';
-});
+function addNavButtonsEvents() {
+  // Nav Buttons
+  nextNav.addEventListener('click', (e) => {
+    //Reseta o app-conversor
+    error();
+    setViewPractice();
+  });
+  beforeNav.addEventListener('click', (e) => {
+    container.style.transform = 'none';
+  });
+}
 
 // Debounce
 function debounce(callback, delay) {
@@ -139,24 +141,39 @@ function debounce(callback, delay) {
   };
 }
 
-// Events tecla ENTER
-answer.addEventListener('keydown', (e) => {
-  if (e.code === 'Enter' || e.key === 'Enter' || e.keyCode === 13) {
-    e.preventDefault();
-    btnCheck.click();
-  }
-  // if (answer.innerText.length > 40) {
-  //   if (
-  //     e.code === 'Backspace' ||
-  //     e.key === 'Backspace' ||
-  //     e.keyCode === 8 ||
-  //     e.code === 'Delete' ||
-  //     e.key === 'Delete' ||
-  //     e.keyCode === 46
-  //   ) {
-  //   } else {
-  //     e.preventDefault();
-  //     alert('Limite de caracteres atingido');
-  //   }
-  // }
-});
+function addEnterKeyEvent() {
+  // Events tecla ENTER
+  answer.addEventListener('keydown', (e) => {
+    if (e.code === 'Enter' || e.key === 'Enter' || e.keyCode === 13) {
+      e.preventDefault();
+      btnCheck.click();
+    }
+    // if (answer.innerText.length > 40) {
+    //   if (
+    //     e.code === 'Backspace' ||
+    //     e.key === 'Backspace' ||
+    //     e.keyCode === 8 ||
+    //     e.code === 'Delete' ||
+    //     e.key === 'Delete' ||
+    //     e.keyCode === 46
+    //   ) {
+    //   } else {
+    //     e.preventDefault();
+    //     alert('Limite de caracteres atingido');
+    //   }
+    // }
+  });
+}
+
+function addCheckButtonEvent() {
+  btnCheck.addEventListener('click', handleCheck);
+}
+
+function init() {
+  createQuestion();
+  addResizeEvent();
+  addNavButtonsEvents();
+  addEnterKeyEvent();
+  addCheckButtonEvent();
+}
+init();
